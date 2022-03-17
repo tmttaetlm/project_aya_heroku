@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Специалисты{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <div class="headerText">SMM COMMUNITY KAZAKHSTAN</div>
+    </div>
+    <div class="main">
+        <div class="users-list">
+            {% if specialists %}
+                {% for u in specialists %}
+                    <div class="user-card">
+                        <div class="user-img"></div>
+                        <div class="user-role">{{u.role}}</div>
+                        <div class="user-name">{{u.name}}</div>
+                        <div class="user-desc">{{u.description}}</div>
+                        <div class="user-phone">+{{u.phone}}</div>
+                        <div class="user-tg"><a href="https://t.me/{{u.user}}" target="blank"></a>Написать</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                Not found.
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
