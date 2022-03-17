@@ -7,7 +7,7 @@ from datetime import datetime
 bot = telebot.TeleBot('5299933627:AAFadtni2QPlSxeikWyTYNN-DukFGkm_KY0')
 
 def write_query(query, params = {}):
-    connection = sqlite3.connect('/home/developer/Code/python/django/project_aya/db.sqlite3')
+    connection = sqlite3.connect('/home/developer/Code/python/project_aya/db.sqlite3')
     cursor = connection.cursor()
     try:
         cursor.execute(query, params)
@@ -17,7 +17,7 @@ def write_query(query, params = {}):
         print(f"The error '{e}' occurred")
 
 def read_query(query, params = {}):
-    connection = sqlite3.connect('/home/developer/Code/python/django/project_aya/db.sqlite3')
+    connection = sqlite3.connect('/home/developer/Code/python/project_aya/db.sqlite3')
     cursor = connection.cursor()
     result = None
     try:

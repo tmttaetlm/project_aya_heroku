@@ -450,7 +450,7 @@ def create_one_click_vacancy(data):
 def create_task(dt_val):
     cron = CronTab(user=True)
     #job = cron.new(command='python ~/project_aya/send_to_bot.py')
-    job = cron.new(command='python3 ~/Code/python/django/project_aya/bot/send_to_bot.py', comment = dt_val)
+    job = cron.new(command='python3 ~/Code/python/project_aya/bot/send_to_bot.py', comment = dt_val)
     job.day.on(int(dt_val[0:2]))
     job.month.on(int(dt_val[2:4]))
     job.hour.on(int(dt_val[5:7]))
