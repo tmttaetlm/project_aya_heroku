@@ -675,4 +675,4 @@ def keyboards(type, params = {}):
     
     return keyboard
 
-bot.infinity_polling()
+#bot.infinity_polling()

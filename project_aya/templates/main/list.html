@@ -9,6 +9,11 @@
         <div class="headerText">SMM COMMUNITY KAZAKHSTAN</div>
     </div>
     <div class="main">
+        <div class="filters">
+            <select name="speciality" id="speciality">
+                <option value="" style="display:none">Выберите специализацию</option>
+            </select>
+        </div>
         <div class="users-list">
             {% if specialists %}
                 {% for u in specialists %}
