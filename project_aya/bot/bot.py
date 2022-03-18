@@ -10,7 +10,7 @@ bot = telebot.TeleBot('5299933627:AAFadtni2QPlSxeikWyTYNN-DukFGkm_KY0')
 search_params = {}
 
 def write_query(query, params = {}):
-    connection = sqlite3.connect('../db.sqlite3')
+    connection = sqlite3.connect('.../db.sqlite3')
     cursor = connection.cursor()
     try:
         cursor.execute(query, params)
@@ -20,7 +20,7 @@ def write_query(query, params = {}):
         print(f"The error '{e}' occurred")
 
 def read_query(query, params = {}):
-    connection = sqlite3.connect('../db.sqlite3')
+    connection = sqlite3.connect('.../db.sqlite3')
     cursor = connection.cursor()
     result = None
     try:
@@ -39,6 +39,8 @@ else:
     admin_id = admin[0][0]
     admin_name = admin[0][1]
 
+bot.send_message(248598993, 'Есть контакт')
+exit
 messages = read_query('select * from main_message where clue = "bot_msgs"')
 
 @bot.message_handler(commands=['start'])
@@ -674,5 +676,7 @@ def keyboards(type, params = {}):
         keyboard.add(types.KeyboardButton('🔙 Назад'))
     
     return keyboard
+
+
 
 #bot.infinity_polling()

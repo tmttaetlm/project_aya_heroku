@@ -1,5 +1,10 @@
+import json
+import os
+from xml.etree.ElementInclude import include
+import requests
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views import View
 
 from .models import User
 
@@ -11,14 +16,12 @@ def index(request):
         param = {'specialists': User.objects.filter(role="Исполнитель")}
     return render(request, 'main/list.html', param)
 
-def bot(request):
-    if request.method == 'GET':
-        data = ' method GET'
-    elif request.method == 'POST':
-        data = ' method POST'
-    else:
-        data = ''
-    a = {'Hello world': data}
-    response = JsonResponse(a)
-    response['Access-Control-Allow-Origin'] = '*'
-    return response
+class bot_webhook(View):
+    def post(self, request, *args, **kwargs):
+        t_data = json.loads(request.body)
+        t_message = t_data["message"]
+        t_chat = t_message["chat"]
+
+        include('.../bot/bot.py')
+
+        return JsonResponse({"ok": "POST request processed"})
