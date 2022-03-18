@@ -18,21 +18,16 @@ def index(request):
 
 class bot_webhook(View):
     def post(self, request, *args, **kwargs):
-        t_data = json.loads(request.body)
-        t_message = t_data["message"]
-        t_chat = t_message["chat"]
-
         import telebot, sqlite3
         from sqlite3 import Error
-        from telebot import types
-        from crontab import CronTab
-        from datetime import datetime
 
         bot = telebot.TeleBot('5299933627:AAFadtni2QPlSxeikWyTYNN-DukFGkm_KY0')
-        search_params = {}
 
+        t_data = json.loads(request.body)
+        bot.send_message(248598993, t_data)
+        """
         def read_query(query, params = {}):
-            connection = sqlite3.connect('.../db.sqlite3')
+            connection = sqlite3.connect('..../db.sqlite3')
             cursor = connection.cursor()
             result = None
             try:
@@ -52,7 +47,7 @@ class bot_webhook(View):
             admin_name = admin[0][1]
 
         bot.send_message(248598993, 'Есть контакт')
-
+        """
         #include('.../bot/bot.py')
 
         return JsonResponse({"ok": "POST request processed"})
