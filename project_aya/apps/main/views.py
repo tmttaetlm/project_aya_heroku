@@ -22,6 +22,37 @@ class bot_webhook(View):
         t_message = t_data["message"]
         t_chat = t_message["chat"]
 
-        include('.../bot/bot.py')
+        import telebot, sqlite3
+        from sqlite3 import Error
+        from telebot import types
+        from crontab import CronTab
+        from datetime import datetime
+
+        bot = telebot.TeleBot('5299933627:AAFadtni2QPlSxeikWyTYNN-DukFGkm_KY0')
+        search_params = {}
+
+        def read_query(query, params = {}):
+            connection = sqlite3.connect('.../db.sqlite3')
+            cursor = connection.cursor()
+            result = None
+            try:
+                cursor.execute(query, params)
+                result = cursor.fetchall()
+                return result
+            except Error as e:
+                print(f"The error '{e}' occurred")
+
+        admin = read_query('select chat_id, user from main_user where role = "Админ"', {})
+        if len(admin) == 0:
+            admin_id = 248598993
+            admin_name = 'Медет'
+            #admin_id = 469614681
+        else:
+            admin_id = admin[0][0]
+            admin_name = admin[0][1]
+
+        bot.send_message(248598993, 'Есть контакт')
+
+        #include('.../bot/bot.py')
 
         return JsonResponse({"ok": "POST request processed"})
