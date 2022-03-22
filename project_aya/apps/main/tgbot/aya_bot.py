@@ -7,7 +7,7 @@ from crontab import CronTab
 from datetime import datetime
 
 def write_query(query, params = {}):
-    connection = sqlite3.connect('....../db.sqlite3')
+    connection = sqlite3.connect('/home/Yerdos/project_aya/db.sqlite3')
     cursor = connection.cursor()
     try:
         cursor.execute(query, params)
@@ -17,7 +17,7 @@ def write_query(query, params = {}):
         print(f"The error '{e}' occurred")
 
 def read_query(query, params = {}):
-    connection = sqlite3.connect('....../db.sqlite3')
+    connection = sqlite3.connect('/home/Yerdos/project_aya/db.sqlite3')
     cursor = connection.cursor()
     result = None
     try:
