@@ -80,8 +80,11 @@ WSGI_APPLICATION = 'project_aya.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Yerdos$ayadb',
+        'USER': 'Yerdos',
+        'PASSWORD': 'Zkgm1248)%',
+        'HOST': 'Yerdos.mysql.pythonanywhere-services.com',
     }
 }
 

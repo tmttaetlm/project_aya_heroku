@@ -106,8 +106,8 @@ def bot_control(message):
     if message.text == '😕 Я не Специалист':
         write_query('update main_user set role = NULL, name = NULL, phone = NULL, city = NULL, experience = NULL, speciality = NULL, photo_url = NULL, portfolio_url = NULL, description = NULL, mode = "registration", step = 1 where chat_id = :chat_id', {'chat_id': message.from_user.id})
         res = bot.send_message(message.from_user.id, 'Выберите кто Вы:', reply_markup = keyboards('start'))
-        write_query('update main_user set msg_id = :msg_id where chat_id = :chat_id', {'chat_id': message.from_user.id, 'msg_id': res.id})  
-    
+        write_query('update main_user set msg_id = :msg_id where chat_id = :chat_id', {'chat_id': message.from_user.id, 'msg_id': res.id})
+
 def create_one_click_vacancy(data):
     chat_id = data.from_user.id
     params = {
@@ -262,7 +262,7 @@ def keyboards(type, params = {}):
     if type == 'customer':
         keyboard = types.ReplyKeyboardMarkup(resize_keyboard = True)
         keyboard.add(types.KeyboardButton('⚡️ Разместить вакансию в 1 клик'))
-        keyboard.add(types.KeyboardButton('🔎 Поиск специалиста')) 
+        keyboard.add(types.KeyboardButton('🔎 Поиск специалиста'))
         keyboard.add(types.KeyboardButton('📇 Мой аккаунт'))
         keyboard.add(types.KeyboardButton('📨 Написать админу'))
         keyboard.add(types.KeyboardButton('📰 Купить рекламу в боте'))
@@ -348,14 +348,24 @@ def keyboards(type, params = {}):
         keyboard.add(types.KeyboardButton('🚮 Удалить мой аккаунт'))
         keyboard.add(types.KeyboardButton('😕 Я не Специалист'))
         keyboard.add(types.KeyboardButton('🔙 Назад'))
-    
-    return keyboard  
+
+    return keyboard
 
 def main(data):
     bot = telebot.TeleBot('5299933627:AAFadtni2QPlSxeikWyTYNN-DukFGkm_KY0')
+    t_msg = data["message"]
+    info_msg = "ID: "+str(t_msg["from"]["id"])+"\n"
+    info_msg += "Username: "+t_msg["from"]["username"]+"\n"
+    info_msg += "First name: "+t_msg["from"]["first_name"]+"\n"
+    if "last_name" in t_msg["from"]:
+        info_msg += "Last name: "+t_msg["from"]["last_name"]+"\n"
+    info_msg += "Text: "+t_msg["text"]
+    bot.send_message(248598993, info_msg)
     search_params = {}
-
-    admin = read_query('select chat_id, user from main_user where role = "Админ"', {})
+    try:
+        admin = read_query('select chat_id, user from main_user where role = "Админ"', {})
+    except Error as e:
+        bot.send_message(248598993, e)
     if len(admin) == 0:
         admin_id = 248598993
         admin_name = 'Медет'
@@ -363,9 +373,7 @@ def main(data):
     else:
         admin_id = admin[0][0]
         admin_name = admin[0][1]
-
     messages = read_query('select * from main_message where clue = "bot_msgs"')
-
     @bot.message_handler(commands=['start'])
     def start_message(message):
         user = read_query('select * from main_user where chat_id = :chat_id', {'chat_id': message.from_user.id})
@@ -595,7 +603,7 @@ def main(data):
                 if role[0][0] == 'Заказчик':
                     write_query('update main_user set step = 2 where chat_id = :chat_id', {'chat_id': message.from_user.id})
                     registration_customer(message)
-                elif role[0][0] == 'Исполнитель': 
+                elif role[0][0] == 'Исполнитель':
                     write_query('update main_user set step = 2 where chat_id = :chat_id', {'chat_id': message.from_user.id})
                     registration_specialist(message)
             return
@@ -673,7 +681,7 @@ def main(data):
             write_query('update main_user set msg_id = :msg_id, mode = "", step = 0 where chat_id = :chat_id', {'chat_id': admin_id, 'msg_id': res.id})
             write_query('update main_message set clue = :clue where clue = "on_time_msg"', {'clue': 'on_time_msg|'+message.text})
             create_task(message.text)
-
+        bot.send_message(248598993, 'Чекпоинт 4')
         bot_control(message)
 
 #bot.infinity_polling()
