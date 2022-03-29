@@ -73,9 +73,8 @@ def registration_customer(bot, data):
         bot_user.save()
         return
     if bot_user.step == 2:
-        remove_keyboard = types.ReplyKeyboardRemove()
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
-        res = bot.send_message(chat_id, '☺️ Как к Вам обращаться?', reply_markup = remove_keyboard)
+        bot.delete_message(chat_id, bot_user.msg_id)
+        res = bot.send_message(chat_id, '☺️ Как к Вам обращаться?', reply_markup = keyboard('remove_keyboard'))
         if data.text == 'Пропустить':
             bot_user.phone = '-'
             bot_user.msg_id = res.id
@@ -127,9 +126,8 @@ def registration_specialist (bot, data, skip = 0):
         bot_user.save()
         return
     if bot_user.step == 2:
-        remove_keyboard = types.ReplyKeyboardRemove()
         if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
-        res = bot.send_message(chat_id, 'Как к Вам обращаться?', reply_markup = remove_keyboard)
+        res = bot.send_message(chat_id, 'Как к Вам обращаться?', reply_markup = keyboard('remove_keyboard'))
         if data.text == 'Пропустить':
             bot_user.phone = '-'
             bot_user.msg_id = res.id

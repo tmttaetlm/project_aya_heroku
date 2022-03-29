@@ -19,8 +19,11 @@ class User(models.Model):
     mode = models.CharField('Процесс', max_length = 50, null = True)
     step = models.IntegerField('Шаг', null = True)
 
+    def __str__(self):
+        return self.user
+
     class Meta:
-        verbose_name = 'Пользователь'
+        verbose_name = 'Пользователя'
         verbose_name_plural = 'Пользователи'
 
 class Vacancy(models.Model):
@@ -30,13 +33,19 @@ class Vacancy(models.Model):
     date = models.DateTimeField('Дата публикации', null = True)
     city = models.CharField('Город для публикации', max_length = 500, null = True)
 
+    def __str__(self):
+        return self.text
+
     class Meta:
-        verbose_name = 'Вакансия'
+        verbose_name = 'Вакансию'
         verbose_name_plural = 'Вакансии'
 
 class Message(models.Model):
     text = models.CharField('Текст', max_length = 1000, null = True)
     clue = models.CharField('Ключ', max_length = 50, null = True)
+
+    def __str__(self):
+        return self.text
 
     class Meta:
         verbose_name = 'Сообщение'
@@ -46,6 +55,9 @@ class Info(models.Model):
     text = models.CharField('Текст', max_length = 1000, null = True)
     clue = models.CharField('Ключ', max_length = 50, null = True)
 
+    def __str__(self):
+        return self.clue
+
     class Meta:
-        verbose_name = 'Допольнителное'
-        verbose_name_plural = 'Допольнителные'
+        verbose_name = 'Допольнительное свойство'
+        verbose_name_plural = 'Допольнительные свойства'

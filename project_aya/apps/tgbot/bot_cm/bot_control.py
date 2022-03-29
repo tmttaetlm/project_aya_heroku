@@ -63,7 +63,7 @@ def control(bot, message):
     if message.text == '✅ Изменить имя':
         bot_user.mode = 'edit_name'
         bot_user.save()
-        bot.send_message(message.from_user.id, 'Напишите мне ваше имя')
+        bot.send_message(message.from_user.id, 'Напишите мне ваше имя', reply_markup = keyboard('remove_keyboard'))
     if message.text == '🏢 Изменить город':
         bot_user.mode = 'edit_city'
         bot_user.save()
@@ -75,7 +75,7 @@ def control(bot, message):
     if message.text == '🚮 Удалить мой аккаунт':
         person = User.objects.get(chat_id=message.from_user.id)
         person.delete()
-        bot.send_message(message.from_user.id, 'Рады были с вами поработать. Всего хорошего!\n\nЧтобы зарегистрироваться повторно отправьте боту команду /start')
+        bot.send_message(message.from_user.id, 'Рады были с вами поработать. Всего хорошего!\n\nЧтобы зарегистрироваться повторно отправьте боту команду /start', reply_markup = keyboard('remove_keyboard'))
     # Редактирование профиля заказчика
     if message.text == '😕 Я не Заказчик':
         bot_user.role = None
@@ -100,15 +100,15 @@ def control(bot, message):
     if message.text == '📂 Изменить ссылку портфолио':
         bot_user.mode = 'edit_portfolio'
         bot_user.save()
-        bot.send_message(message.from_user.id, 'Отправьте ссылку на портфолио')
+        bot.send_message(message.from_user.id, 'Отправьте ссылку на портфолио', reply_markup = keyboard('remove_keyboard'))
     if message.text == '📷 Изменить фото':
         bot_user.mode = 'edit_photo'
         bot_user.save()
-        bot.send_message(message.from_user.id, 'Отправьте мне фото')
+        bot.send_message(message.from_user.id, 'Отправьте мне фото', reply_markup = keyboard('remove_keyboard'))
     if message.text == '✌ Изменить описание о себе':
         bot_user.mode = 'edit_description'
         bot_user.save()
-        bot.send_message(message.from_user.id, 'Напишите пару слов о себе')
+        bot.send_message(message.from_user.id, 'Напишите пару слов о себе', reply_markup = keyboard('remove_keyboard'))
     if message.text == '😕 Я не Специалист':
         bot_user.role = None
         bot_user.name = None

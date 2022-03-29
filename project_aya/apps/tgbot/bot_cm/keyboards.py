@@ -94,5 +94,7 @@ def keyboard(type, params = {}):
         keyboard.add(types.KeyboardButton('🚮 Удалить мой аккаунт'))
         keyboard.add(types.KeyboardButton('😕 Я не Специалист'))
         keyboard.add(types.KeyboardButton('🔙 Назад'))
+    if type == 'remove_keyboard':
+        keyboard = types.ReplyKeyboardRemove()
 
     return keyboard

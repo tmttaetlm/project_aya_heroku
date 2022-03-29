@@ -45,7 +45,7 @@ def handler(bot, message):
             bot_user.photo_url = message.photo[-1].file_id
             bot_user.mode = ''
             bot_user.save()
-            bot.send_message(message.from_user.id, 'Ваше фото обновлено.')
+            bot.send_message(message.from_user.id, 'Ваше фото обновлено.', reply_markup = keyboard('customer') if bot_user.role == 'Заказчик' else keyboard('specialist'))
         else:
             bot_user.step = 7
             bot_user.save()
@@ -87,17 +87,17 @@ def handler(bot, message):
         bot_user.name = message.text
         bot_user.mode = ''
         bot_user.save()
-        bot.send_message(message.from_user.id, 'Имя изменёно.')
+        bot.send_message(message.from_user.id, 'Имя изменёно.', reply_markup = keyboard('customer') if bot_user.role == 'Заказчик' else keyboard('specialist'))
     if bot_user.mode == 'edit_portfolio':
         bot_user.portfolio_url = message.text
         bot_user.mode = ''
         bot_user.save()
-        bot.send_message(message.from_user.id, 'Ссылка на портфолио обновлена.')
+        bot.send_message(message.from_user.id, 'Ссылка на портфолио обновлена.', reply_markup = keyboard('customer') if bot_user.role == 'Заказчик' else keyboard('specialist'))
     if bot_user.mode == 'edit_description':
         bot_user.description = message.text
         bot_user.mode = ''
         bot_user.save()
-        bot.send_message(message.from_user.id, 'Раздел о себе обновлен.')
+        bot.send_message(message.from_user.id, 'Раздел о себе обновлен.', reply_markup = keyboard('customer') if bot_user.role == 'Заказчик' else keyboard('specialist'))
     if bot_user.mode == 'send_now':
         bot.delete_message(admin_id, admin.msg_id)
         users = User.objects.exclude(role='Админ')
