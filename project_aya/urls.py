@@ -19,6 +19,6 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('', include('main.urls')),
-    url(r'^tgbot/', include('tgbot.urls')),
     path('admin/', admin.site.urls),
+    url(r'^tgbot/', include('tgbot.urls')),
 ]

@@ -1,5 +1,4 @@
 import json
-from .tgbot import aya_bot
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views import View
@@ -12,8 +11,3 @@ def index(request):
     else:
         param = {'specialists': User.objects.filter(role="Исполнитель")}
     return render(request, 'main/list.html', param)
-
-class bot_webhook(View):
-    def post(self, request, *args, **kwargs):
-        aya_bot.main(json.loads(request.body))
-        return JsonResponse({"ok": "POST request processed"})

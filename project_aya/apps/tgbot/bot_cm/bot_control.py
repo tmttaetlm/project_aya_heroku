@@ -5,14 +5,14 @@ from .functions import search_master
 
 def control(bot, message):
     admin = User.objects.filter(role='Админ')
-    user = User.objects.filter(chat_id=message.from_user.id)
+    bot_user = User.objects.get(chat_id=message.from_user.id)
     messages = Message.objects.filter(clue='bot_msgs')
     if len(admin) == 0:
         admin_id = 248598993
         admin_name = 'dos_augustous'
         #admin_id = 469614681
     else:
-        admin_id = admin.chat_id
+        admin_id = admin[0].chat_id
         admin_name = admin[0].user
 
     # Меню администратора
@@ -36,41 +36,41 @@ def control(bot, message):
         admin.save()
     # Сторона заказчика
     if message.text == '⚡️ Разместить вакансию в 1 клик':
-        user[0].mode = 'one_click_vacancy'
-        user[0].save()
-        bot.send_message(message.from_user.id, messages[0][1].text)
+        bot_user.mode = 'one_click_vacancy'
+        bot_user.save()
+        bot.send_message(message.from_user.id, messages[1].text.replace('br', '\n'))
         return
     if message.text == '🔎 Поиск специалиста':
-        user[0].mode = 'search'
-        user[0].step = 1
-        user[0].save()
+        bot_user.mode = 'search'
+        bot_user.step = 1
+        bot_user.save()
         search_master(bot, message)
         return
     # Общие функции
     if message.text == '📇 Мой аккаунт':
-        user[0].mode = 'edit_account'
-        user[0].save()
-        bot.send_message(message.from_user.id, 'Редактирование аккаунта', reply_markup = keyboard('edit_customer_account') if user[0].role == 'Заказчик' else keyboard('edit_specialist_account'))
+        bot_user.mode = 'edit_account'
+        bot_user.save()
+        bot.send_message(message.from_user.id, 'Редактирование аккаунта', reply_markup = keyboard('edit_customer_account') if bot_user.role == 'Заказчик' else keyboard('edit_specialist_account'))
     if message.text == '📨 Написать админу':
         bot.send_message(message.from_user.id, 'Аккаунт администратора @'+admin_name+'\nВы можете напрямую написать ему.')
     if message.text == '📰 Купить рекламу в боте':
         bot.send_message(message.from_user.id, 'Для размещения рекламы напишите @'+admin_name)
     if message.text == '🔙 Назад':
-        user[0].mode = ''
-        user[0].save()
-        bot.send_message(message.from_user.id, 'Главное меню', reply_markup = keyboard('customer') if user[0].role == 'Заказчик' else keyboard('specialist'))
+        bot_user.mode = ''
+        bot_user.save()
+        bot.send_message(message.from_user.id, 'Главное меню', reply_markup = keyboard('customer') if bot_user.role == 'Заказчик' else keyboard('specialist'))
     # Редактирование профиля общее
     if message.text == '✅ Изменить имя':
-        user[0].mode = 'edit_name'
-        user[0].save()
+        bot_user.mode = 'edit_name'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Напишите мне ваше имя')
     if message.text == '🏢 Изменить город':
-        user[0].mode = 'edit_city'
-        user[0].save()
+        bot_user.mode = 'edit_city'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Выберите город из списка', reply_markup = keyboard('cities'))
     if message.text == '📱 Изменить номер телефона':
-        user[0].mode = 'edit_phone'
-        user[0].save()
+        bot_user.mode = 'edit_phone'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Отправьте новый номер телефона или воспользуйтесь кнопкой ниже', reply_markup = keyboard('phone_request'))
     if message.text == '🚮 Удалить мой аккаунт':
         person = User.objects.get(chat_id=message.from_user.id)
@@ -78,50 +78,50 @@ def control(bot, message):
         bot.send_message(message.from_user.id, 'Рады были с вами поработать. Всего хорошего!\n\nЧтобы зарегистрироваться повторно отправьте боту команду /start')
     # Редактирование профиля заказчика
     if message.text == '😕 Я не Заказчик':
-        user[0].role = None
-        user[0].name = None
-        user[0].phone = None
-        user[0].city = None
-        user[0].mode = 'registration'
-        user[0].step = 1
-        user[0].save()
+        bot_user.role = None
+        bot_user.name = None
+        bot_user.phone = None
+        bot_user.city = None
+        bot_user.mode = 'registration'
+        bot_user.step = 1
+        bot_user.save()
         res = bot.send_message(message.from_user.id, 'Выберите кто Вы:', reply_markup = keyboard('start'))
-        user[0].msg_id = res.id
-        user[0].save()
+        bot_user.msg_id = res.id
+        bot_user.save()
     # Редактирование профиля исполнителя
     if message.text == '💪 Изменить специализацию':
-        user[0].mode = 'edit_speciality'
-        user[0].save()
+        bot_user.mode = 'edit_speciality'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Выберите специализацию', reply_markup = keyboard('speciality'))
     if message.text == '⏰ Изменить опыт работы':
-        user[0].mode = 'edit_experience'
-        user[0].save()
+        bot_user.mode = 'edit_experience'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Укажите опыт работы', reply_markup = keyboard('experience'))
     if message.text == '📂 Изменить ссылку портфолио':
-        user[0].mode = 'edit_portfolio'
-        user[0].save()
+        bot_user.mode = 'edit_portfolio'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Отправьте ссылку на портфолио')
     if message.text == '📷 Изменить фото':
-        user[0].mode = 'edit_photo'
-        user[0].save()
+        bot_user.mode = 'edit_photo'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Отправьте мне фото')
     if message.text == '✌ Изменить описание о себе':
-        user[0].mode = 'edit_description'
-        user[0].save()
+        bot_user.mode = 'edit_description'
+        bot_user.save()
         bot.send_message(message.from_user.id, 'Напишите пару слов о себе')
     if message.text == '😕 Я не Специалист':
-        user[0].role = None
-        user[0].name = None
-        user[0].phone = None
-        user[0].city = None
-        user[0].experience = None
-        user[0].speciality = None
-        user[0].photo_url = None
-        user[0].portfolio_url = None
-        user[0].description = None
-        user[0].mode = 'registration'
-        user[0].step = 1
-        user[0].save()
+        bot_user.role = None
+        bot_user.name = None
+        bot_user.phone = None
+        bot_user.city = None
+        bot_user.experience = None
+        bot_user.speciality = None
+        bot_user.photo_url = None
+        bot_user.portfolio_url = None
+        bot_user.description = None
+        bot_user.mode = 'registration'
+        bot_user.step = 1
+        bot_user.save()
         res = bot.send_message(message.from_user.id, 'Выберите кто Вы:', reply_markup = keyboard('start'))
-        user[0].msg_id = res.id
-        user[0].save()
+        bot_user.msg_id = res.id
+        bot_user.save()

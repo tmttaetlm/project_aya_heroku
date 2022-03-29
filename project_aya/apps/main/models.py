@@ -41,3 +41,11 @@ class Message(models.Model):
     class Meta:
         verbose_name = 'Сообщение'
         verbose_name_plural = 'Сообщения'
+
+class Info(models.Model):
+    text = models.CharField('Текст', max_length = 1000, null = True)
+    clue = models.CharField('Ключ', max_length = 50, null = True)
+
+    class Meta:
+        verbose_name = 'Допольнителное'
+        verbose_name_plural = 'Допольнителные'

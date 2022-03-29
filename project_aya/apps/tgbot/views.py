@@ -12,7 +12,7 @@ from main.models import User, Message
 
 from .bot_cm.keyboards import keyboard
 from .bot_cm.message_handlers import handler
-from .bot_cm.callback_handlers import callbacks
+from .bot_cm.callback_handlers import callback
 from .bot_cm.bot_control import control
 from .bot_cm.functions import registration_customer, registration_specialist
 
@@ -58,8 +58,8 @@ def start_message(message):
             bot.send_message(message.chat.id, 'Рады снова Вас видеть, '+user[0].name, reply_markup = markup)
 
 @bot.callback_query_handler(func=lambda call: True)
-def user_callbacks(callback):
-    callbacks(bot, callback)
+def user_callbacks(call):
+    callback(bot, call)
 
 @bot.message_handler(content_types=['text', 'contact', 'photo'])
 def get_text_messages(message):
@@ -71,8 +71,7 @@ def get_text_messages(message):
 def process(request):
     try:
         update = telebot.types.Update.de_json(json.loads(request.body))
-        if update.message:
-            bot.process_new_messages([update.message])
+        bot.process_new_updates([update])
     except Exception as e:
         logger.exception(e)
     return HttpResponse("")
