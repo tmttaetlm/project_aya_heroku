@@ -66,7 +66,7 @@ def registration_customer(bot, data):
 
     if bot_user.mode != 'registration': return
     if bot_user.step == 1:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, '📱 Отправьте Ваш номер телефон (необязательно)', reply_markup = keyboard('phone_request'))
         bot_user.role = 'Заказчик'
         bot_user.msg_id = res.id
@@ -89,14 +89,14 @@ def registration_customer(bot, data):
                 bot_user.save()
         return
     if bot_user.step == 3:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, '🏙 Ваш город?', reply_markup = keyboard('cities'))
         bot_user.name = data.text
         bot_user.msg_id = res.id
         bot_user.save()
         return
     if bot_user.step == 4:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Поздравляю с успешной регистрацией! После подтверждения администратором Вы сможете использовать функционал бота!')
         bot_user.city = data.data[data.data.index('_')+1:len(data.data)]
         bot_user.msg_id = res.id
@@ -119,14 +119,14 @@ def registration_specialist (bot, data, skip = 0):
 
     if bot_user.mode != 'registration': return
     if bot_user.step == 1:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, '📱 Отправьте Ваш номер телефон (необязательно)', reply_markup = keyboard('phone_request'))
         bot_user.role = 'Исполнитель'
         bot_user.msg_id = res.id
         bot_user.save()
         return
     if bot_user.step == 2:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Как к Вам обращаться?', reply_markup = keyboard('remove_keyboard'))
         if data.text == 'Пропустить':
             bot_user.phone = '-'
@@ -142,21 +142,21 @@ def registration_specialist (bot, data, skip = 0):
                 bot_user.save()
         return
     if bot_user.step == 3:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Ваш город?', reply_markup = keyboard('cities'))
         bot_user.name = data.text
         bot_user.msg_id = res.id
         bot_user.save()
         return
     if bot_user.step == 4:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Укажите опыт работы', reply_markup = keyboard('experience'))
         bot_user.city = data.data[data.data.index('_')+1:len(data.data)]
         bot_user.msg_id = res.id
         bot_user.save()
         return
     if bot_user.step == 5:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Укажите специальность', reply_markup = keyboard('speciality'))
         bot_user.experience = data.data[data.data.index('_')+1:len(data.data)]
         bot_user.msg_id = res.id
@@ -165,7 +165,7 @@ def registration_specialist (bot, data, skip = 0):
     if bot_user.step == 6:
         t_keyboard = types.InlineKeyboardMarkup()
         t_keyboard.add(types.InlineKeyboardButton('Пропустить', callback_data = 'skip_photo'))
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Загрузите вашу фотография', reply_markup = t_keyboard)
         bot_user.speciality = data.data[data.data.index('_')+1:len(data.data)]
         bot_user.msg_id = res.id
@@ -174,7 +174,7 @@ def registration_specialist (bot, data, skip = 0):
     if bot_user.step == 7:
         t_keyboard = types.InlineKeyboardMarkup()
         t_keyboard.add(types.InlineKeyboardButton('Пропустить', callback_data = 'skip_portfolio'))
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Отправьте ссылку на портфолио', reply_markup = t_keyboard)
         if skip:
             bot_user.photo_url = '-'
@@ -188,7 +188,7 @@ def registration_specialist (bot, data, skip = 0):
     if bot_user.step == 8:
         t_keyboard = types.InlineKeyboardMarkup()
         t_keyboard.add(types.InlineKeyboardButton('Пропустить', callback_data = 'skip_description'))
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Раскажите немного о себе', reply_markup = t_keyboard)
         if skip:
             bot_user.portfolio_url = '-'
@@ -200,7 +200,7 @@ def registration_specialist (bot, data, skip = 0):
             bot_user.save()
         return
     if bot_user.step == 9:
-        if len(user) > 0: bot.delete_message(chat_id, bot_user.msg_id)
+        bot.delete_message(chat_id, bot_user.msg_id)
         res = bot.send_message(chat_id, 'Поздравляю с успешной регистрацией! После подтверждения администратором Вы сможете использовать функционал бота!')
         if skip:
             bot_user.description = '-'
