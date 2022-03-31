@@ -1,4 +1,3 @@
-import telebot
 from telebot import types
 
 def keyboard(type, params = {}):

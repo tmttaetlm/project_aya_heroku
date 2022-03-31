@@ -34,7 +34,7 @@ def callback(bot, callback_message):
             search_master(bot, callback_message)
         elif bot_user.mode == 'edit_city':
             bot_user.city = callback_message.data[callback_message.data.index('_')+1:len(callback_message.data)]
-            bot_user.mode = ''
+            bot_user.mode = None
             bot_user.save()
             bot.send_message(callback_message.from_user.id, 'Город изменён.')
         elif bot_user.mode.rfind('one_click_vacancy_') >= 0:
@@ -68,7 +68,7 @@ def callback(bot, callback_message):
             search_master(bot, callback_message)
         elif bot_user.mode == 'edit_experience':
             bot_user.experience = callback_message.data[callback_message.data.index('_')+1:len(callback_message.data)]
-            bot_user.mode = ''
+            bot_user.mode = None
             bot_user.save()
             bot.send_message(callback_message.from_user.id, 'Опыт работы изменен.')
         else:
@@ -82,7 +82,7 @@ def callback(bot, callback_message):
             search_master(bot, callback_message)
         elif bot_user.mode == 'edit_speciality':
             bot_user.speciality = callback_message.data[callback_message.data.index('_')+1:len(callback_message.data)]
-            bot_user.mode = ''
+            bot_user.mode = None
             bot_user.save()
             bot.send_message(callback_message.from_user.id, 'Специализация изменена.')
         else:
@@ -201,21 +201,19 @@ def callback(bot, callback_message):
         vac.delete()
         return
     if callback_message.data == 'send_now':
-        bot_user = User.objects.get(chat_id=admin_id)
-        bot.delete_message(admin_id, bot_user.msg_id)
+        bot.delete_message(admin_id, admin[0].msg_id)
         res = bot.send_message(admin_id, 'Отправьте текст сообщения для отправки')
-        bot_user.msg_id = res.id
-        bot_user.mode = 'send_now'
-        bot_user.save()
+        admin[0].msg_id = res.id
+        admin[0].mode = 'send_now'
+        admin[0].save()
         return
     if callback_message.data == 'send_on_time':
-        bot_user = User.objects.filter(chat_id=admin_id)
-        bot.delete_message(admin_id, bot_user.msg_id)
+        bot.delete_message(admin_id, admin[0].msg_id)
         res = bot.send_message(admin_id, 'Отправьте текст сообщения для отправки')
-        bot_user.msg_id = res.id
-        bot_user.mode = 'send_on_time'
-        bot_user.step = 1
-        bot_user.save()
+        admin[0].msg_id = res.id
+        admin[0].mode = 'send_on_time'
+        admin[0].step = 1
+        admin[0].save()
         Message.objects.create(clue='on_time_msg')
         return
     ################

@@ -1,5 +1,4 @@
 from telebot import types
-from crontab import CronTab
 from datetime import datetime
 from main.models import User, Vacancy, Info
 from .keyboards import keyboard
@@ -14,16 +13,6 @@ def create_one_click_vacancy(bot, data):
     bot_user.msg_id = res.id
     bot_user.mode = bot_user.mode + '_' + str(v.id)
     bot_user.save()
-
-def create_task(bot, dt_val):
-    cron = CronTab(user=True)
-    #job = cron.new(command='python ~/project_aya/send_to_bot.py')
-    job = cron.new(command='python3 ~/Code/python/project_aya/bot/send_to_bot.py', comment = dt_val)
-    job.day.on(int(dt_val[0:2]))
-    job.month.on(int(dt_val[2:4]))
-    job.hour.on(int(dt_val[5:7]))
-    job.minute.on(int(dt_val[7:9]))
-    cron.write()
 
 def search_master(bot, data):
     bot_user = User.objects.get(chat_id=data.from_user.id)
@@ -44,7 +33,7 @@ def search_master(bot, data):
         return
     if bot_user.mode == 'search' and bot_user.step == 4:
         bot_user.step = 0
-        bot_user.mode = ''
+        bot_user.mode = None
         bot_user.save()
         sp_city = Info.objects.get(clue='sp_city')
         sp_exp = Info.objects.get(clue='sp_exp')
@@ -101,7 +90,7 @@ def registration_customer(bot, data):
         bot_user.city = data.data[data.data.index('_')+1:len(data.data)]
         bot_user.msg_id = res.id
         bot_user.step = 0
-        bot_user.mode = ''
+        bot_user.mode = None
         bot_user.save()
         phone = '+'+str(bot_user.phone) if str(bot_user.phone) != '-' else '-'
         msg = 'Пользователь @'+bot_user.user+' завершил регистрацию!\n\nИмя: '+bot_user.name+'\nID: '+str(bot_user.chat_id)+'\nType: '+bot_user.role+'\nТелефон: '+phone
