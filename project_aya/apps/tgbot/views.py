@@ -7,7 +7,6 @@ import logging
 import json
 
 from datetime import datetime
-
 from main.models import User, Message
 
 from .bot_cm.keyboards import keyboard
