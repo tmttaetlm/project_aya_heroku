@@ -1,12 +1,14 @@
 import os
+import django
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project_aya.settings")
+django.setup()
+
 import telebot
 from datetime import datetime
-from main.models import User, Message
-from django.conf import settings
+from .models import User, Message
 
-#os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'project_aya.settings')
-
-bot = telebot.TeleBot(settings.TELEGRAM_TOKEN)
+bot = telebot.TeleBot('5299933627:AAFadtni2QPlSxeikWyTYNN-DukFGkm_KY0')
 
 now = datetime.now().strftime('%d%m_%H%M')
 msg = Message.objects.get(clue='on_time_msg|'+now)
