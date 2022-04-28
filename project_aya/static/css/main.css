@@ -9,6 +9,14 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
+    background-image: url('../img/oriental.png');;
+}
+
+select {
+    height: 30px;
+    background-color: #88888888;
+    border: none;
+    border-radius: 5px;
 }
 
 .header {
@@ -33,14 +41,15 @@ body {
 .users-list {
     display: flex;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    margin-top: 10%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-top: calc(1vh + 5%);
     padding: 20px 10px;
 }
 .user-card {
     background: #fff;
     min-width: 15vw;
-    min-height: 45vh;
+    max-height: 60vh;
     margin-right: 15px;
     border-radius: 20px;
     padding: 10px;
@@ -70,10 +79,15 @@ body {
     font-weight: bold;
     font-size: 18pt;
     margin: 15px 0 0 5px;
+    max-height: 5%;
+    overflow: hidden;
 }
 .user-desc {
     color: #888888;
     margin: 10px 0 0 5px;
+    min-height: 15%;
+    max-height: 15%;
+    overflow: hidden;
 }
 .user-phone {
     font-style: italic;
@@ -93,4 +107,30 @@ body {
 }
 .user-tg a {
     display: none;
+}
+.rightBlock {
+  width: 80px;
+  height: 60%;
+  position: fixed;
+  right: 0px;
+  background: -moz-linear-gradient(to left, rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%);
+  background: -webkit-linear-gradient(to left, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%);
+  background: linear-gradient(to left, rgb(255, 255, 255) 0%,rgba(255, 255, 255, 0) 100%);
+}
+.leftBlock {
+  width: 80px;
+  height: 60%;
+  position: fixed;
+  left: 0px;
+  background: -moz-linear-gradient(to right, rgba(30,87,153,1) 0%, rgba(125,185,232,0) 100%);
+  background: -webkit-linear-gradient(to right, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%);
+  background: linear-gradient(to right, rgb(255, 255, 255) 0%,rgba(255, 255, 255, 0) 100%);
+}
+.show {
+  opacity: 1;
+  transition: 0.5s;
+}
+.hide {
+  opacity: 0;
+  transition: 0.5s;
 }

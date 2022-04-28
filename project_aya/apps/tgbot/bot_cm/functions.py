@@ -38,10 +38,13 @@ def search_master(bot, data):
         sp_city = Info.objects.get(clue='sp_city')
         sp_exp = Info.objects.get(clue='sp_exp')
         sp_spec = Info.objects.get(clue='sp_spec')
-        result = User.objects.filter(city=sp_city, experience=sp_exp, speciality=sp_spec, role='Исполнитель').order_by('-id')[:10]
-        msg = 'Специалисты, соответствующие вашим критериям поиска:\n\n'
-        for row in result:
-            msg += 'Имя: '+row.name+'\nНомер телефона: '+row.phone+'\nСсылка на портфолио: '+row.portfolio_url+'\nНаписать в телеграм: @'+row.user+'\n\n'
+        result = User.objects.filter(city=sp_city, experience=sp_exp, speciality=sp_spec, role='Исполнитель').order_by('-registration_date')[:10]
+        if len(result) > 0:
+            msg = 'Специалисты, соответствующие вашим критериям поиска:\n\n'
+            for row in result:
+                msg += 'Имя: '+row.name+'\nНомер телефона: '+row.phone+'\nСсылка на портфолио: '+row.portfolio_url+'\nНаписать в телеграм: @'+row.user+'\n\n'
+        else:
+            msg = 'Специалисты, соответствующие вашим критериям не найдены:\n\n'
         bot.send_message(data.from_user.id, msg)
         return
     return

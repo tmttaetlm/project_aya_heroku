@@ -12,13 +12,13 @@ def control(bot, message):
 
     # Меню администратора
     if message.text == '👤 Пользователи':
-        users = User.objects.exclude(role='Админ').order_by('-id')[:10]
+        users = User.objects.exclude(role='Админ').order_by('-registration_date')[:10]
         msg = 'Последние 10 зарегистрировавщихся пользователей:\n\n'
         for user in users:
             msg += 'Имя: '+user.name+'\nНомер телефона: '+user.phone+'\nГород: '+user.city+'\nДата регистрации: '+user.registration_date.strftime('%d.%m.%Y %H:%M:%S')+'\nНаписать в телеграм: @'+user.user+'\n\n'
         bot.send_message(admin_id, msg)
     if message.text == '📄 Объявления':
-        vacancies = Vacancy.objects.order_by('-id')[:10]
+        vacancies = Vacancy.objects.order_by('-date')[:10]
         msg = 'Последние 10 опубликованных объявлений:\n\n'
         for vacancy in vacancies:
             author = User.objects.get(chat_id = vacancy.chat_id)
@@ -79,7 +79,7 @@ def control(bot, message):
         bot_user.mode = 'registration'
         bot_user.step = 1
         bot_user.save()
-        res = bot.send_message(message.from_user.id, 'Выберите кто Вы:', reply_markup = keyboard('start'))
+        res = bot.send_message(message.from_user.id, 'Выберите кто Вы:', reply_markup = keyboard('who_you_are'))
         bot_user.msg_id = res.id
         bot_user.save()
     # Редактирование профиля исполнителя
@@ -116,6 +116,6 @@ def control(bot, message):
         bot_user.mode = 'registration'
         bot_user.step = 1
         bot_user.save()
-        res = bot.send_message(message.from_user.id, 'Выберите кто Вы:', reply_markup = keyboard('start'))
+        res = bot.send_message(message.from_user.id, 'Выберите кто Вы:', reply_markup = keyboard('who_you_are'))
         bot_user.msg_id = res.id
         bot_user.save()
