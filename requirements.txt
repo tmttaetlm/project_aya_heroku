@@ -1,2 +1,5 @@
 python-crontab
 pytelegrambotapi
+django
+gunicorn
+django-heroku
