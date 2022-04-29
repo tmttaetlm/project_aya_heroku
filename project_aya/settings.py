@@ -57,15 +57,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-MIDDLEWARE_CLASSES = (
-    # Simplified static file serving.
-    # https://warehouse.python.org/project/whitenoise/
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-)
-
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 ROOT_URLCONF = 'project_aya.urls'
 
 TEMPLATES = [
@@ -143,10 +134,6 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(HEROKU_PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(HEROKU_PROJECT_ROOT, 'static'),
-)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
