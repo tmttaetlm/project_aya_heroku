@@ -1,4 +1,4 @@
-#!/home/developer/Code/python/project_aya/.venv/bin/python
+#!/home/developer/Code/python/project_aya/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
